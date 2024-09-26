@@ -1,0 +1,66 @@
+import tkinter as tk
+import random
+
+def play():
+    user = user_choice.get().lower()
+    if user not in options:
+        result_var.set("Invalid choice! Please choose rock, paper, or scissors.")
+        return
+    
+    comp = random.choice(options)
+    if user == comp:
+        result = "It's a tie!"
+    elif (user == "rock" and comp == "scissors") or \
+         (user == "paper" and comp == "rock") or \
+         (user == "scissors" and comp == "paper"):
+        result = "You win!"
+    else:
+        result = "Computer wins!"
+    
+    result_var.set(f"Computer chose: {comp}\n{result}")
+
+def reset():
+    user_choice.delete(0, tk.END)
+    result_var.set("")
+
+def exit_game():
+    window.destroy()
+
+# Initialize the game window
+window = tk.Tk()
+window.title("Rock, Paper, Scissors")
+window.geometry("400x300")
+window.configure(bg='lightblue')
+
+# Create a label for the game title
+title_label = tk.Label(window, text="Rock, Paper, Scissors", font=("Arial", 24), bg='lightblue')
+title_label.pack(pady=20)
+
+# Prompt the user to choose
+prompt_label = tk.Label(window, text="Choose: Rock, Paper, or Scissors", bg='lightblue')
+prompt_label.pack()
+
+# Input field for user choice
+user_choice = tk.Entry(window)
+user_choice.pack(pady=10)
+
+# Result variable and entry field for results
+result_var = tk.StringVar()
+result_entry = tk.Entry(window, textvariable=result_var, bg='white', state='readonly', font=("Arial", 12))
+result_entry.pack(pady=10)
+
+# Buttons for play, reset, and exit
+play_button = tk.Button(window, text="PLAY", command=play)
+play_button.pack(pady=5)
+
+reset_button = tk.Button(window, text="RESET", command=reset)
+reset_button.pack(pady=5)
+
+exit_button = tk.Button(window, text="EXIT", command=exit_game)
+exit_button.pack(pady=5)
+
+# Options for the computer
+options = ["rock", "paper", "scissors"]
+
+# Run the window
+window.mainloop()
